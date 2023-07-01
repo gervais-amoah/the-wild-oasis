@@ -22,7 +22,13 @@ export default function App() {
             <div>
               <Header as="h2">Check in and out</Header>
               <Button onClick={() => alert("Check in")}>Check in</Button>
-              <Button onClick={() => alert("Check out")}>Check out</Button>
+              <Button
+                size="small"
+                variation="secondary"
+                onClick={() => alert("Check out")}
+              >
+                Check out
+              </Button>
             </div>
           </Row>
 
