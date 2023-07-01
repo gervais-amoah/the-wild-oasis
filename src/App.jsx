@@ -17,6 +17,7 @@ export default function App() {
       <StyledApp>
         <Header as="h1">Hello World</Header>
         <Header as="h2">Check in and out</Header>
+        <Header as="p">Delete!</Header>
         <Input placeholder="ok boomer" type="number" />
         <Button>HA!</Button>
       </StyledApp>
