@@ -43,6 +43,7 @@ import React from "react";
 import { formatCurrency } from "../../utils/helpers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
+import { toast } from "react-hot-toast";
 
 export default function CabinRow({ cabin }) {
   const {
@@ -62,11 +63,11 @@ export default function CabinRow({ cabin }) {
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
-      // TODO Notify user with izitoast
+      toast.success("Cabin deleted successfully");
     },
     onError: (err) => {
-      //  notify user with izitoast
-      console.error(err);
+      toast.error("Something went wrong. Try again later.");
+      console.error("Error while trying to delete cabin:\n", err);
     },
   });
 
