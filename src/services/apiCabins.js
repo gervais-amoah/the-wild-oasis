@@ -1,7 +1,7 @@
 import supabase from "../services/supabase";
 import { supabaseUrl } from "../services/supabase";
 
-export async function createNewCabin(newCabin) {
+export async function createEditCabin(newCabin) {
   //  create the image'name and path
   const imageName = `${Math.random()}-${newCabin.image.name}`.replace("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
