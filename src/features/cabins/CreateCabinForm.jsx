@@ -24,14 +24,14 @@ function CreateCabinForm() {
       reset();
       toast.success("New cabin created");
     },
-    onerror: (err) => {
-      toast.error("Something went wrong. Try again later.");
+    onError: (err) => {
+      toast.error(err);
       console.error("Error while creating a new cabin:\n", err);
     },
   });
 
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   }
 
   function onError(err) {
@@ -115,7 +115,7 @@ function CreateCabinForm() {
         <FileInput
           id="image"
           accept="image/*"
-          {...register("description", {
+          {...register("image", {
             required: "This field is required",
           })}
         />
