@@ -25,22 +25,26 @@ const TableHeader = styled.header`
 `;
 
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "../../services/apiCabins";
+import { toast } from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import { useCabins } from "./useCabins";
 
 export default function CabinTable() {
-  const {
-    isLoading,
-    data: cabins,
-    error,
-  } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: getCabins,
-  });
+  const { isLoading, cabins, error } = useCabins();
 
   if (isLoading) return <Spinner />;
+
+  if (error) {
+    toast.error("Error while fetching cabin");
+
+    return (
+      <div style={{ textAlign: "center" }}>
+        <h1>😐Oops...</h1>
+        <p>Somthing went wrong. Please try again later</p>
+      </div>
+    );
+  }
 
   return (
     <Table role="table">
