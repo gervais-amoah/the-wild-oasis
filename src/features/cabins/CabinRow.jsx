@@ -57,6 +57,7 @@ export default function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
 
   const [showForm, setShowForm] = useState(false);
@@ -64,6 +65,18 @@ export default function CabinRow({ cabin }) {
   const { isCreating, createCabin } = useCreateCabin();
 
   const isWorking = isCreating || isDeleting;
+
+  function duplicateCabin() {
+    const dupCabin = {
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    };
+    createCabin(dupCabin);
+  }
 
   return (
     <>
@@ -78,10 +91,7 @@ export default function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <div>
-          <button
-            onClick={() => createCabin({ ...cabin, name: `Copy of ${name}` })}
-            disabled={isWorking}
-          >
+          <button onClick={duplicateCabin} disabled={isWorking}>
             <HiSquare2Stack />
           </button>
           <button
