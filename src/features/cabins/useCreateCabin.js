@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 export function useCreateCabin({ reset }) {
   const queryClient = useQueryClient();
 
-  const { isLoading: isWorking, mutate: createCabin } = useMutation({
+  const { isLoading: isCreating, mutate: createCabin } = useMutation({
     mutationFn: createEditCabin,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -20,5 +20,5 @@ export function useCreateCabin({ reset }) {
     },
   });
 
-  return { isWorking, createCabin };
+  return { isCreating, createCabin };
 }
