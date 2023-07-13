@@ -2,8 +2,6 @@ import supabase from "../services/supabase";
 import { supabaseUrl } from "../services/supabase";
 
 export async function createEditCabin(cabinData) {
-  console.log(cabinData);
-
   let imagePath = "";
   let imageName = "";
   let uploadImage = false;
@@ -19,7 +17,6 @@ export async function createEditCabin(cabinData) {
       imageName = `${Math.random()}-${cabinData.image.name}`.replace("/", "");
       imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
       uploadImage = true;
-      console.log("will uploading image");
     } catch (err) {
       console.error("error getting image name and path");
     }
@@ -56,7 +53,6 @@ export async function createEditCabin(cabinData) {
   }
 
   if (uploadImage) {
-    console.log("uploading image:\n", imageName, cabinData.image);
     //  upload cabin's image
     const { error: uploadError } = await supabase.storage
       .from("cabin-images")

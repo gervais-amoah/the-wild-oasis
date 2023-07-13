@@ -37,8 +37,6 @@ function CreateCabinForm({ cabinToEdit }) {
   });
 
   function onSubmit(data) {
-    console.log("data from component \n", data);
-    // console.log("type of", typeof data.image);
     const cabinData = isEditSession
       ? {
           ...data,
@@ -47,7 +45,6 @@ function CreateCabinForm({ cabinToEdit }) {
         }
       : { ...data, image: data.image[0] };
 
-    console.log("cabinData:\n", cabinData);
     mutate(cabinData);
   }
 
