@@ -44,10 +44,12 @@ import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
 
-export default function CabinRow({ cabin }) {
-  const { isDeleting, deleteCabin } = useDeleteCabin();
-  const [showForm, setShowForm] = useState(false);
+import { HiPencil } from "react-icons/hi";
+import { HiTrash } from "react-icons/hi";
+import { HiSquare2Stack } from "react-icons/hi2";
+import { useCreateCabin } from "./useCreateCabin";
 
+export default function CabinRow({ cabin }) {
   const {
     id: cabinId,
     name,
@@ -56,6 +58,12 @@ export default function CabinRow({ cabin }) {
     discount,
     image,
   } = cabin;
+
+  const [showForm, setShowForm] = useState(false);
+  const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { isCreating, createCabin } = useCreateCabin();
+
+  const isWorking = isCreating || isDeleting;
 
   return (
     <>
@@ -71,18 +79,22 @@ export default function CabinRow({ cabin }) {
         )}
         <div>
           <button
+            onClick={() => createCabin({ ...cabin, name: `Copy of ${name}` })}
+            disabled={isWorking}
+          >
+            <HiSquare2Stack />
+          </button>
+          <button
             onClick={() => setShowForm(!showForm)}
             style={{
-              backgroundColor: "darkred",
-              color: "white",
-              marginLeft: "12px",
+              margin: "0 4px",
             }}
-            disabled={isDeleting}
+            disabled={isWorking}
           >
-            Edit
+            <HiPencil />
           </button>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            Delete
+          <button onClick={() => deleteCabin(cabinId)} disabled={isWorking}>
+            <HiTrash />
           </button>
         </div>
       </TableRow>
