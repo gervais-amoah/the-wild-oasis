@@ -9,6 +9,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Textarea from "../../ui/Textarea";
 import { supabaseUrl } from "../../services/supabase";
+import { useCreateCabin } from "./useCreateCabin";
 
 function CreateCabinForm({ cabinToEdit }) {
   const { id: editId, ...editValues } = cabinToEdit || {};
@@ -19,8 +20,10 @@ function CreateCabinForm({ cabinToEdit }) {
   });
   const { errors } = formState;
 
-  const queryClient = useQueryClient();
+  const { isWorking: isCreating, createCabin } = useCreateCabin({ reset });
 
+  //  START
+  const queryClient = useQueryClient();
   const { isLoading: isWorking, mutate } = useMutation({
     mutationFn: createEditCabin,
     onSuccess: () => {
@@ -35,17 +38,27 @@ function CreateCabinForm({ cabinToEdit }) {
       console.error("Error while creating a new cabin:\n", err);
     },
   });
+  //  END
 
   function onSubmit(data) {
-    const cabinData = isEditSession
-      ? {
-          ...data,
-          id: editId,
-          image: typeof data.image == "object" ? data.image[0] : data.image,
-        }
-      : { ...data, image: data.image[0] };
+    if (isEditSession) {
+      mutate({
+        ...data,
+        id: editId,
+        image: typeof data.image == "object" ? data.image[0] : data.image,
+      });
+    } else {
+      createCabin({ ...data, image: data.image[0] });
+    }
+    // const cabinData = isEditSession
+    //   ? {
+    //       ...data,
+    //       id: editId,
+    //       image: typeof data.image == "object" ? data.image[0] : data.image,
+    //     }
+    //   : { ...data, image: data.image[0] };
 
-    mutate(cabinData);
+    // mutate(cabinData);
   }
 
   function onError(err) {
@@ -56,7 +69,7 @@ function CreateCabinForm({ cabinToEdit }) {
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label={"Cabin name"} error={errors?.name?.message}>
         <Input
-          disabled={isWorking}
+          disabled={isWorking || isCreating}
           type="text"
           id="name"
           {...register("name", {
@@ -67,7 +80,7 @@ function CreateCabinForm({ cabinToEdit }) {
 
       <FormRow label={"Maximum capacity"} error={errors?.maxCapacity?.message}>
         <Input
-          disabled={isWorking}
+          disabled={isWorking || isCreating}
           type="number"
           id="maxCapacity"
           {...register("maxCapacity", {
@@ -82,7 +95,7 @@ function CreateCabinForm({ cabinToEdit }) {
 
       <FormRow label={"Regular price"} error={errors?.regularPrice?.message}>
         <Input
-          disabled={isWorking}
+          disabled={isWorking || isCreating}
           type="number"
           id="regularPrice"
           {...register("regularPrice", {
@@ -97,7 +110,7 @@ function CreateCabinForm({ cabinToEdit }) {
 
       <FormRow label={"Discount"} error={errors?.discount?.message}>
         <Input
-          disabled={isWorking}
+          disabled={isWorking || isCreating}
           type="number"
           id="discount"
           defaultValue={0}
@@ -115,7 +128,7 @@ function CreateCabinForm({ cabinToEdit }) {
         error={errors?.description?.message}
       >
         <Textarea
-          disabled={isWorking}
+          disabled={isWorking || isCreating}
           type="number"
           id="description"
           defaultValue=""
@@ -136,10 +149,14 @@ function CreateCabinForm({ cabinToEdit }) {
       </FormRow>
 
       <FormRow>
-        <Button variation="secondary" type="reset">
+        <Button
+          disabled={isWorking || isCreating}
+          variation="secondary"
+          type="reset"
+        >
           Cancel
         </Button>
-        <Button disabled={isWorking}>
+        <Button disabled={isWorking || isCreating}>
           {isEditSession ? "Edit cabin" : "Create a new cabin"}
         </Button>
       </FormRow>
