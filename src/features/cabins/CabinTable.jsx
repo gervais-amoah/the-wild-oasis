@@ -26,6 +26,7 @@ const TableHeader = styled.header`
 
 import React from "react";
 import { toast } from "react-hot-toast";
+import HasError from "../../ui/HasError";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabins } from "./useCabins";
@@ -38,12 +39,7 @@ export default function CabinTable() {
   if (error) {
     toast.error("Error while fetching cabin");
 
-    return (
-      <div style={{ textAlign: "center" }}>
-        <h1>😐Oops...</h1>
-        <p>Somthing went wrong. Please try again later</p>
-      </div>
-    );
+    return <HasError />;
   }
 
   return (
