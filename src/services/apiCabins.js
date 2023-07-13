@@ -2,8 +2,11 @@ import supabase from "../services/supabase";
 import { supabaseUrl } from "../services/supabase";
 
 export async function createEditCabin(cabinData) {
+  console.log(cabinData);
+
   let imagePath = "";
   let imageName = "";
+  let uploadImage = false;
 
   if (
     typeof cabinData.image == "string" &&
@@ -12,8 +15,14 @@ export async function createEditCabin(cabinData) {
     imagePath = cabinData.image;
   } else {
     //  create the image'name and path
-    imageName = `${Math.random()}-${cabinData.image.name}`.replace("/", "");
-    imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+    try {
+      imageName = `${Math.random()}-${cabinData.image.name}`.replace("/", "");
+      imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+      uploadImage = true;
+      console.log("will uploading image");
+    } catch (err) {
+      console.error("error getting image name and path");
+    }
   }
 
   const query = supabase.from("cabins");
@@ -22,7 +31,7 @@ export async function createEditCabin(cabinData) {
   if (cabinData.id) {
     //  UPDATE CURR CABIN
     const { data, error } = await query
-      .update(cabinData)
+      .update({ ...cabinData, image: imagePath ?? cabinData.image })
       .eq("id", cabinData.id)
       .select();
 
@@ -43,6 +52,11 @@ export async function createEditCabin(cabinData) {
       throw new Error("Cabin could not be created");
     }
 
+    reqData = data;
+  }
+
+  if (uploadImage) {
+    console.log("uploading image:\n", imageName, cabinData.image);
     //  upload cabin's image
     const { error: uploadError } = await supabase.storage
       .from("cabin-images")
@@ -50,13 +64,11 @@ export async function createEditCabin(cabinData) {
 
     if (uploadError) {
       console.error(uploadError);
-      // await supabase.from("cabins").delete().eq("id", data.id);
+      await supabase.from("cabins").delete().eq("id", reqData.id);
       throw new Error(
         "Cabin image could not be uploaded and the cabin was not created"
       );
     }
-
-    reqData = data;
   }
 
   return reqData;

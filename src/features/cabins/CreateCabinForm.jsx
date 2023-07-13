@@ -8,6 +8,7 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Textarea from "../../ui/Textarea";
+import { supabaseUrl } from "../../services/supabase";
 
 function CreateCabinForm({ cabinToEdit }) {
   const { id: editId, ...editValues } = cabinToEdit || {};
@@ -36,13 +37,17 @@ function CreateCabinForm({ cabinToEdit }) {
   });
 
   function onSubmit(data) {
+    console.log("data from component \n", data);
+    // console.log("type of", typeof data.image);
     const cabinData = isEditSession
       ? {
           ...data,
           id: editId,
+          image: typeof data.image == "object" ? data.image[0] : data.image,
         }
       : { ...data, image: data.image[0] };
 
+    console.log("cabinData:\n", cabinData);
     mutate(cabinData);
   }
 
