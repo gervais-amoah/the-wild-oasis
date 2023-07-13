@@ -23,7 +23,12 @@ function CreateCabinForm({ cabinToEdit }) {
 
   const isWorking = isCreating || isUpdating;
 
+  function isNumeric(value) {
+    return !isNaN(parseFloat(value)) && isFinite(value);
+  }
+
   function onSubmit(data) {
+    // console.log(data);
     if (isEditSession) {
       updateCabin({
         ...data,
@@ -55,10 +60,12 @@ function CreateCabinForm({ cabinToEdit }) {
       <FormRow label={"Maximum capacity"} error={errors?.maxCapacity?.message}>
         <Input
           disabled={isWorking}
-          type="number"
+          type="text"
           id="maxCapacity"
           {...register("maxCapacity", {
             required: "This field is required",
+            validate: (value) =>
+              isNumeric(value) || "Please provide a valid number",
             min: {
               value: 1,
               message: "Capacity should be at least one",
@@ -70,10 +77,12 @@ function CreateCabinForm({ cabinToEdit }) {
       <FormRow label={"Regular price"} error={errors?.regularPrice?.message}>
         <Input
           disabled={isWorking}
-          type="number"
+          type="text"
           id="regularPrice"
           {...register("regularPrice", {
             required: "This field is required",
+            validate: (value) =>
+              isNumeric(value) || "Please provide a valid number",
             min: {
               value: 10,
               message: "Price should be at least 10",
@@ -85,7 +94,7 @@ function CreateCabinForm({ cabinToEdit }) {
       <FormRow label={"Discount"} error={errors?.discount?.message}>
         <Input
           disabled={isWorking}
-          type="number"
+          type="text"
           id="discount"
           defaultValue={0}
           {...register("discount", {
@@ -103,7 +112,7 @@ function CreateCabinForm({ cabinToEdit }) {
       >
         <Textarea
           disabled={isWorking}
-          type="number"
+          type="text"
           id="description"
           defaultValue=""
           {...register("description", {
