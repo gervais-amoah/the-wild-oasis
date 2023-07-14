@@ -10,8 +10,9 @@ export function useUpdateCabin(param) {
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
-      param?.reset?.();
       toast.success("Cabin updated successfully");
+      param?.reset?.();
+      param?.closeModal?.();
     },
     onError: (err) => {
       toast.error(err);

@@ -8,7 +8,7 @@ import Textarea from "../../ui/Textarea";
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
 
-function CreateCabinForm({ cabinToEdit }) {
+function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit || {};
   const isEditSession = Boolean(editId);
 
@@ -18,8 +18,8 @@ function CreateCabinForm({ cabinToEdit }) {
 
   const { errors } = formState;
 
-  const { isCreating, createCabin } = useCreateCabin({ reset });
-  const { isUpdating, updateCabin } = useUpdateCabin();
+  const { isCreating, createCabin } = useCreateCabin({ reset, closeModal });
+  const { isUpdating, updateCabin } = useUpdateCabin({ closeModal });
 
   const isWorking = isCreating || isUpdating;
 
@@ -42,6 +42,10 @@ function CreateCabinForm({ cabinToEdit }) {
 
   function onError(err) {
     console.error(err);
+  }
+
+  function closeModal() {
+    onCloseModal?.();
   }
 
   return (
@@ -132,7 +136,12 @@ function CreateCabinForm({ cabinToEdit }) {
       </FormRow>
 
       <FormRow>
-        <Button disabled={isWorking} variation="secondary" type="reset">
+        <Button
+          disabled={isWorking}
+          variation="secondary"
+          type="reset"
+          onClick={closeModal}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
