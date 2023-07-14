@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledModal = styled.div`
+  /* --border-radius-lg: 15px; */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -10,6 +11,9 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+  max-height: calc(100vh - 5rem);
+  max-width: calc(100% - 4rem);
+  overflow: auto;
 `;
 
 const Overlay = styled.div`
