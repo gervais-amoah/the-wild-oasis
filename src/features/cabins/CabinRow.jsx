@@ -99,7 +99,6 @@ export default function CabinRow({ cabin }) {
         <Modal>
           <Menus.Menu>
             <Menus.Toggle id={cabinId} />
-
             <Menus.List id={cabinId}>
               {/* Duplicate */}
               <Menus.Button icon={<HiSquare2Stack />} onClick={duplicateCabin}>

@@ -64,6 +64,7 @@ const StyledButton = styled.button`
 import React, { createContext, useContext, useState } from "react";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { createPortal } from "react-dom";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 const MenuContext = createContext();
 
@@ -104,13 +105,15 @@ function Toggle({ id }) {
 }
 
 function List({ id, children }) {
-  const { openId, position } = useContext(MenuContext);
-  //  TODO close menu list if user clickoutside
+  const { openId, position, close } = useContext(MenuContext);
+  const ref = useClickOutside(close);
 
   if (openId !== id) return;
 
   return createPortal(
-    <StyledList position={position}>{children}</StyledList>,
+    <StyledList position={position} ref={ref}>
+      {children}
+    </StyledList>,
     document.querySelector("#modal")
   );
 }
