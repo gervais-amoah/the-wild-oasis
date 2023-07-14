@@ -58,3 +58,42 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+import React, { createContext, useContext } from "react";
+
+const TableContext = createContext();
+
+export default function Table({ columns, children }) {
+  return (
+    <TableContext.Provider value={{ columns }}>
+      <StyledTable role="table">{children}</StyledTable>
+    </TableContext.Provider>
+  );
+}
+
+Table.Header = Header;
+Table.Body = Body;
+Table.Row = Row;
+
+function Header({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledHeader columns={columns} as={"header"}>
+      {children}
+    </StyledHeader>
+  );
+}
+
+function Body({ data, render }) {
+  if (!data || !data.length) return <Empty>No data to show</Empty>;
+  return <StyledBody>{data.map(render)}</StyledBody>;
+}
+
+function Row({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledRow role="row" columns={columns}>
+      {children}
+    </StyledRow>
+  );
+}
