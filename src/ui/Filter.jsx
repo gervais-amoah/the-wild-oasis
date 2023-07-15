@@ -15,7 +15,7 @@ const FilterButton = styled.button`
   border: none;
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     css`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
@@ -39,6 +39,7 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const currentOtion = searchParams.get(filterField) || filterField.at(0).value;
 
   function handleClick(filter) {
     searchParams.set(filterField, filter);
@@ -50,6 +51,7 @@ export default function Filter({ filterField, options }) {
         <FilterButton
           key={option.value}
           onClick={() => handleClick(option.value)}
+          $active={option.value === currentOtion}
         >
           {option.label}
         </FilterButton>

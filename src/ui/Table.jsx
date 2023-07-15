@@ -11,13 +11,7 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  /* grid-template-columns: ${(props) => props.columns}; */
-
-  ${({ columns }) =>
-    columns &&
-    css`
-      grid-template-columns: ${columns};
-    `}
+  grid-template-columns: ${(props) => props.$columns};
 
   column-gap: 2.4rem;
   align-items: center;
@@ -85,7 +79,7 @@ Table.Row = Row;
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader columns={columns} as={"header"}>
+    <StyledHeader $columns={columns} as={"header"}>
       {children}
     </StyledHeader>
   );
@@ -99,7 +93,7 @@ function Body({ data, render }) {
 function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledRow role="row" columns={columns}>
+    <StyledRow role="row" $columns={columns}>
       {children}
     </StyledRow>
   );

@@ -31,13 +31,13 @@ function ConfirmDelete({ resourceName, onConfirm, onCloseModal, disabled }) {
 
       <div>
         <Button
-          variation="secondary"
+          $variation="secondary"
           onClick={onCloseModal}
           disabled={disabled}
         >
           Cancel
         </Button>
-        <Button variation="danger" onClick={onConfirm} disabled={disabled}>
+        <Button $variation="danger" onClick={onConfirm} disabled={disabled}>
           Delete
         </Button>
       </div>
