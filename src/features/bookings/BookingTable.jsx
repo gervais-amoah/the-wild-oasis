@@ -7,13 +7,11 @@ import BookingRow from "./BookingRow";
 import useBookings from "./useBookings";
 
 function BookingTable() {
-  const { isLoading, bookings, error } = useBookings();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const filterStatus = searchParams.get("status");
   const sortBy = searchParams.get("sortBy");
 
-  console.log(filterStatus, sortBy);
+  const { isLoading, bookings, error } = useBookings();
 
   if (isLoading) return <Spinner />;
   if (error) {
@@ -22,26 +20,17 @@ function BookingTable() {
   }
   if (!bookings || !bookings.length) return <Empty resource="bookings" />;
 
-  // Filter the bookings
-  const filteredBookings =
-    filterStatus === "all"
-      ? bookings
-      : bookings.filter((elt) => elt.status === filterStatus);
-
   //  Sort the filtered bookings
+  let sortedBookings;
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
 
-  let finalBookings;
-
   if (field === "startDate") {
-    finalBookings = filteredBookings.sort(
+    sortedBookings = bookings.sort(
       (a, b) => modifier * a[field].localeCompare(b[field])
     );
   } else {
-    finalBookings = filteredBookings.sort(
-      (a, b) => modifier * (a[field] - b[field])
-    );
+    sortedBookings = bookings.sort((a, b) => modifier * (a[field] - b[field]));
   }
 
   return (
@@ -57,7 +46,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={finalBookings}
+          data={sortedBookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
