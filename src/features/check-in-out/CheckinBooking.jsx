@@ -8,6 +8,9 @@ import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
+import { useBooking } from "../bookings/useBooking";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../../ui/Spinner";
 
 const Box = styled.div`
   /* Box */
@@ -18,9 +21,10 @@ const Box = styled.div`
 `;
 
 function CheckinBooking() {
+  const { isLoading, booking } = useBooking();
   const moveBack = useMoveBack();
 
-  const booking = {};
+  if (isLoading) return <Spinner />;
 
   const {
     id: bookingId,
@@ -31,7 +35,9 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  function handleCheckin() {}
+  function handleCheckin() {
+    console.log("clicked");
+  }
 
   return (
     <>
