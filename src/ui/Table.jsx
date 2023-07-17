@@ -75,6 +75,7 @@ export default function Table({ columns, children }) {
 Table.Header = Header;
 Table.Body = Body;
 Table.Row = Row;
+Table.Footer = Footer;
 
 function Header({ children }) {
   const { columns } = useContext(TableContext);
