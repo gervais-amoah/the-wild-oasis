@@ -23,7 +23,7 @@ function UpdateSettingsForm() {
     maxBookingLength,
     maxGuestsPerBooking,
     breakfastPrice,
-  } = settings[0];
+  } = settings;
 
   function handleBlur(e, field) {
     const { value } = e.target;
