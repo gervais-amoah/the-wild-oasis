@@ -47,10 +47,10 @@ import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiTrash } from "react-icons/hi";
 import { HiSquare2Stack } from "react-icons/hi2";
 import ConfirmDelete from "../../ui/ConfirmDelete";
-import Modal from "../../ui/Modal";
-import { useCreateCabin } from "./useCreateCabin";
-import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import Modal from "../../ui/Modal";
+import Table from "../../ui/Table";
+import { useCreateCabin } from "./useCreateCabin";
 
 export default function CabinRow({ cabin }) {
   const {
@@ -124,7 +124,7 @@ export default function CabinRow({ cabin }) {
             {/* Delete window */}
             <Modal.Window name="delete">
               <ConfirmDelete
-                resourceName="Cabin"
+                resourceName="cabin"
                 disabled={isWorking}
                 onConfirm={() => deleteCabin(cabinId)}
               />
