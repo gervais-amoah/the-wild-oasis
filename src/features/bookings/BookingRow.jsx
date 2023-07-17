@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Table from "../../ui/Table";
 import Tag from "../../ui/Tag";
 
-import { HiEye, HiPencil } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiEye, HiPencil } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import Menus from "../../ui/Menus";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
@@ -92,12 +92,14 @@ function BookingRow({
         >
           Open
         </Menus.Button>
-        <Menus.Button
-          icon={<HiPencil />}
-          onClick={() => alert(`/booking/${bookingId}`)}
-        >
-          Edit
-        </Menus.Button>
+        {status === "unconfirmed" && (
+          <Menus.Button
+            icon={<HiArrowDownOnSquare />}
+            onClick={() => alert(`/checkin/${bookingId}`)}
+          >
+            Check in
+          </Menus.Button>
+        )}
       </Menus.List>
     </Table.Row>
   );
