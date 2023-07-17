@@ -28,7 +28,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   }
 
   function onSubmit(data) {
-    // console.log(data);
     if (isEditSession) {
       updateCabin({
         ...data,

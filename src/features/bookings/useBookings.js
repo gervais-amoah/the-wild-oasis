@@ -40,13 +40,13 @@ export default function useBookings() {
 
   if (page < limit) {
     queryClient.prefetchQuery({
-      queryFn: () => getBookings({ filter, sort, page: page === page + 1 }),
+      queryFn: () => getBookings({ filter, sort, page: page + 1 }),
       queryKey: ["bookings", { filter: filter?.value }, sort, page + 1],
     });
   }
   if (page > 1) {
     queryClient.prefetchQuery({
-      queryFn: () => getBookings({ filter, sort, page: page === page - 1 }),
+      queryFn: () => getBookings({ filter, sort, page: page - 1 }),
       queryKey: ["bookings", { filter: filter?.value }, sort, page - 1],
     });
   }

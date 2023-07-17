@@ -18,8 +18,6 @@ export async function getBookings({ filter, sort, page }) {
     const from = (page - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
 
-    console.log(from, to);
-
     query = query.range(from, to);
   }
 
