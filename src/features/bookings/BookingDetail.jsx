@@ -8,10 +8,11 @@ import Row from "../../ui/Row";
 import Tag from "../../ui/Tag";
 import BookingDataBox from "./BookingDataBox";
 
+import { useNavigate } from "react-router-dom";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import Spinner from "../../ui/Spinner";
 import { useBooking } from "./useBooking";
-import { useNavigate } from "react-router-dom";
+import { useCheckOut } from "./useCheckout";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -21,6 +22,9 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { isLoading, booking } = useBooking();
+
+  const { checkOut, isCheckingOut } = useCheckOut();
+
   const navigate = useNavigate();
 
   const moveBack = useMoveBack();
@@ -52,7 +56,16 @@ function BookingDetail() {
             Check in
           </Button>
         )}
-        <Button $variation="secondary" onClick={moveBack}>
+        {status === "checked-in" && (
+          <Button onClick={() => checkOut(bookingId)} disabled={isCheckingOut}>
+            Check out
+          </Button>
+        )}
+        <Button
+          $variation="secondary"
+          onClick={moveBack}
+          disabled={isCheckingOut}
+        >
           Back
         </Button>
       </ButtonGroup>

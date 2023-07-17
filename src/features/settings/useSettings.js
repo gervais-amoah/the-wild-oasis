@@ -7,7 +7,7 @@ export function useSettings() {
     queryFn: getSettings,
   });
 
-  const settings = data[0];
+  const settings = isLoading ? null : data[0];
 
   return {
     settings,
