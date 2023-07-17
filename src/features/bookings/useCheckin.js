@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { updateBooking } from "../../services/apiBookings";
 
-export function useCheckin() {
+export function useCheckIn() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 

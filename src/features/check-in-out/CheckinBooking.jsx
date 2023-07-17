@@ -13,7 +13,7 @@ import Checkbox from "../../ui/Checkbox";
 import Spinner from "../../ui/Spinner";
 import { formatCurrency } from "../../utils/helpers";
 import { useBooking } from "../bookings/useBooking";
-import { useCheckin } from "../bookings/useCheckin";
+import { useCheckIn } from "../bookings/useCheckIn";
 import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
@@ -33,7 +33,7 @@ function CheckinBooking() {
 
   const { settings, isLoading: isLoadingSettings } = useSettings();
 
-  const { checkin, isCheckingIn } = useCheckin();
+  const { checkin, isCheckingIn } = useCheckIn();
 
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
 
