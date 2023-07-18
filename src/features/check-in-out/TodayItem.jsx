@@ -20,10 +20,10 @@ const Guest = styled.div`
 `;
 
 import React from "react";
-import Tag from "../../ui/Tag";
-import { Flag } from "../../ui/Flag";
-import Button from "../../ui/Button";
 import { Link } from "react-router-dom";
+import Button from "../../ui/Button";
+import { Flag } from "../../ui/Flag";
+import Tag from "../../ui/Tag";
 import CheckoutButton from "./CheckoutButton";
 
 export default function TodayItem({ activity }) {
