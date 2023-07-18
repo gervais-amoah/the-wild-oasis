@@ -15,7 +15,7 @@ import ConfirmDelete from "../../ui/ConfirmDelete";
 import Menus from "../../ui/Menus";
 import Modal from "../../ui/Modal";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
-import { useCheckOut } from "./useCheckout";
+import { useCheckOut } from "./useCheckOut";
 import { useDeleteBooking } from "./useDeleteBooking";
 
 const Cabin = styled.div`
