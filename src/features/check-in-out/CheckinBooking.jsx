@@ -15,6 +15,7 @@ import { formatCurrency } from "../../utils/helpers";
 import { useBooking } from "../bookings/useBooking";
 import { useCheckIn } from "../bookings/useCheckIn";
 import { useSettings } from "../settings/useSettings";
+import Empty from "../../ui/Empty";
 
 const Box = styled.div`
   /* Box */
@@ -38,6 +39,8 @@ function CheckinBooking() {
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
 
   if (isLoading || isLoadingSettings) return <Spinner />;
+
+  if (!booking) return <Empty resource="booking" />;
 
   const {
     id: bookingId,
