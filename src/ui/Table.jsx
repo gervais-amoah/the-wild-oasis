@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -11,7 +11,8 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  grid-template-columns: ${(props) => props.$columns};
+
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
@@ -58,3 +59,43 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+import React, { createContext, useContext } from "react";
+
+const TableContext = createContext();
+
+export default function Table({ columns, children }) {
+  return (
+    <TableContext.Provider value={{ columns }}>
+      <StyledTable role="table">{children}</StyledTable>
+    </TableContext.Provider>
+  );
+}
+
+Table.Header = Header;
+Table.Body = Body;
+Table.Row = Row;
+Table.Footer = Footer;
+
+function Header({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledHeader $columns={columns} as={"header"}>
+      {children}
+    </StyledHeader>
+  );
+}
+
+function Body({ data, render }) {
+  if (!data || !data.length) return <Empty>No data to show</Empty>;
+  return <StyledBody>{data.map(render)}</StyledBody>;
+}
+
+function Row({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledRow role="row" $columns={columns}>
+      {children}
+    </StyledRow>
+  );
+}
