@@ -40,13 +40,13 @@ export default function Stats({
       />
       <Stat
         title="Check ins"
-        color="indigo"
+        color="yellow"
         value={checkins}
         icon={<HiOutlineCalendarDays />}
       />
       <Stat
         title="Occupacy"
-        color="yellow"
+        color="indigo"
         value={Math.round(occupation * 100) + "%"}
         icon={<HiOutlineChartBar />}
       />
