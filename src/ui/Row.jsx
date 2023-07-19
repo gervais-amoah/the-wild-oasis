@@ -14,6 +14,12 @@ const Row = styled.div`
       flex-direction: column;
       gap: 1.6rem;
     `}
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
 `;
 
 Row.defaultProps = { direction: "vertical" };

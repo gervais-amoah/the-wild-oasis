@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
 const StyledTodayItem = styled.li`
-  display: grid;
-  grid-template-columns: 9rem 2rem 1fr 7rem 9rem;
-  gap: 1.2rem;
+  /* display: grid;
+  grid-template-columns: 9rem 2rem 1fr 7rem 9rem; */
+  /* gap: 1.2rem; */
+
+  display: flex;
   align-items: center;
+  gap: 2rem;
 
   font-size: 1.4rem;
   padding: 0.8rem 0;
@@ -13,6 +16,24 @@ const StyledTodayItem = styled.li`
   &:first-child {
     border-top: 1px solid var(--color-grey-100);
   }
+
+  @media (max-width: 576px) {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+`;
+
+const GuestBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+const CheckInOutBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+  padding-left: 2rem;
 `;
 
 const Guest = styled.div`
@@ -33,24 +54,30 @@ export default function TodayItem({ activity }) {
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
       {status === "checked-in" && <Tag type="blue">Depaerting</Tag>}
-      <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
-      <Guest>{guests.fullName}</Guest>
-      <div>{numNights} nights</div>
 
-      {status === "unconfirmed" && (
-        <Button
-          size="small"
-          $variation="primary"
-          as={Link}
-          to={`/checkin/${id}`}
-        >
-          Check in
-        </Button>
-      )}
+      <GuestBox>
+        <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
+        <Guest>{guests.fullName}</Guest>
+      </GuestBox>
 
-      {status === "checked-in" && (
-        <CheckoutButton bookingId={id}>Check out</CheckoutButton>
-      )}
+      <CheckInOutBox>
+        <div>{numNights} nights</div>
+
+        {status === "unconfirmed" && (
+          <Button
+            size="small"
+            $variation="primary"
+            as={Link}
+            to={`/checkin/${id}`}
+          >
+            Check in
+          </Button>
+        )}
+
+        {status === "checked-in" && (
+          <CheckoutButton bookingId={id}>Check out</CheckoutButton>
+        )}
+      </CheckInOutBox>
     </StyledTodayItem>
   );
 }

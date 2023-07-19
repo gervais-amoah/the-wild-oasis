@@ -23,6 +23,7 @@ const Main = styled.main`
   @media (max-width: 915px) {
     padding: 2rem 2rem 4rem;
     min-height: calc(100vh - 62px); // header is 60px
+    overflow: auto;
   }
 `;
 

@@ -4,6 +4,12 @@ const GlobalStyles = createGlobalStyle`
 /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
 
 /* Media query for screens with width less than 768px */
+/* Extra Small (XS): up to 576px
+    Small (SM): 576px to 767px
+    Medium (MD): 768px to 991px
+    Large (LG): 992px to 1199px
+    Extra Large (XL): 1200px and above */
+    
 /* @media (max-width: 767px) { // 576px | 915px
     background-color: #ffcccc;
   } */
