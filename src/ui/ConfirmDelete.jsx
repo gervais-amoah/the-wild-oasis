@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Button from "./Button";
 import Heading from "./Heading";
+import { useUser } from "../features/authentication/useUser";
+import { toast } from "react-hot-toast";
 
 const StyledConfirmDelete = styled.div`
   width: 40rem;
@@ -21,6 +23,16 @@ const StyledConfirmDelete = styled.div`
 `;
 
 function ConfirmDelete({ resourceName, onConfirm, onCloseModal, disabled }) {
+  const { isVisitor } = useUser();
+
+  function handleConfirm() {
+    if (isVisitor) {
+      toast.error("Visitors cannot do that action");
+      return;
+    }
+    onConfirm();
+  }
+
   return (
     <StyledConfirmDelete>
       <Heading as="h3">Delete {resourceName}</Heading>
@@ -37,7 +49,7 @@ function ConfirmDelete({ resourceName, onConfirm, onCloseModal, disabled }) {
         >
           Cancel
         </Button>
-        <Button $variation="danger" onClick={onConfirm} disabled={disabled}>
+        <Button $variation="danger" onClick={handleConfirm} disabled={disabled}>
           Delete
         </Button>
       </div>

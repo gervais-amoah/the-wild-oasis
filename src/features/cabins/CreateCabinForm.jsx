@@ -10,8 +10,12 @@ import { useUpdateCabin } from "./useUpdateCabin";
 import { useState } from "react";
 import SpinnerMini from "../../ui/SpinnerMini";
 import ImagePreview from "../../ui/ImagePreview";
+import { useUser } from "../authentication/useUser";
+import { toast } from "react-hot-toast";
 
 function CreateCabinForm({ cabinToEdit, onCloseModal }) {
+  const { isVisitor } = useUser();
+
   const { id: editId, ...editValues } = cabinToEdit || {};
   const isEditSession = Boolean(editId);
 
@@ -41,7 +45,10 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   }
 
   function onSubmit(data) {
-    console.log(selectedImageFile);
+    if (isVisitor && isEditSession) {
+      toast.error("Visitors cannot do that action");
+      return;
+    }
 
     if (isEditSession) {
       updateCabin({
@@ -145,7 +152,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
         <FileInput
           onChange={handleImageChange}
           id="image"
-          required
+          required={!isEditSession}
           accept="image/*"
           // {...register("image", {
           //   required: isEditSession ? false : "This field is required",

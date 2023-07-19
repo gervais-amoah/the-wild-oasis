@@ -7,12 +7,14 @@ import FormRow from "../../ui/FormRow";
 import HasError from "../../ui/HasError";
 import Input from "../../ui/Input";
 import Spinner from "../../ui/Spinner";
+import { useUser } from "../authentication/useUser";
 import { useSettings } from "./useSettings";
 import { useUpdateSetting } from "./useUpdateSettings";
 
 function UpdateSettingsForm() {
   const { settings, error, isLoading } = useSettings();
   const { updateSetting, isUpdating } = useUpdateSetting();
+  const { isVisitor } = useUser();
 
   if (isLoading) return <Spinner />;
 
@@ -40,7 +42,7 @@ function UpdateSettingsForm() {
           type="number"
           defaultValue={minBookingLength}
           onBlur={(e) => handleBlur(e, "minBookingLength")}
-          disabled={isUpdating}
+          disabled={isUpdating || isVisitor}
           id="min-nights"
         />
       </FormRow>
@@ -49,7 +51,7 @@ function UpdateSettingsForm() {
           type="number"
           defaultValue={maxBookingLength}
           onBlur={(e) => handleBlur(e, "maxBookingLength")}
-          disabled={isUpdating}
+          disabled={isUpdating || isVisitor}
           id="max-nights"
         />
       </FormRow>
@@ -58,7 +60,7 @@ function UpdateSettingsForm() {
           type="number"
           defaultValue={maxGuestsPerBooking}
           onBlur={(e) => handleBlur(e, "maxGuestsPerBooking")}
-          disabled={isUpdating}
+          disabled={isUpdating || isVisitor}
           id="max-guests"
         />
       </FormRow>
@@ -67,7 +69,7 @@ function UpdateSettingsForm() {
           type="number"
           defaultValue={breakfastPrice}
           onBlur={(e) => handleBlur(e, "breakfastPrice")}
-          disabled={isUpdating}
+          disabled={isUpdating || isVisitor}
           id="breakfast-price"
         />
       </FormRow>

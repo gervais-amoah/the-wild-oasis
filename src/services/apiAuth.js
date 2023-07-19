@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function signup({ fullName, email, password }) {
@@ -52,7 +53,7 @@ export async function updateCurrentUser({ fullName, avatar, password }) {
 
   const { error, data } = await supabase.auth.updateUser(updateData);
 
-  if (error) throw new Error(error);
+  if (error) toast.error(error.message); // throw new Error(error);
   if (!avatar) return data;
 
   //  upload avatar image
