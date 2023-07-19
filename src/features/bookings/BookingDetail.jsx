@@ -17,7 +17,7 @@ import { useDeleteBooking } from "./useDeleteBooking";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import Spinner from "../../ui/Spinner";
 import { useBooking } from "./useBooking";
-import { useCheckOut } from "./useCheckOut";
+import { useCheckOut } from "../check-in-out/useCheckOut";
 import Empty from "../../ui/Empty";
 
 const HeadingGroup = styled.div`
