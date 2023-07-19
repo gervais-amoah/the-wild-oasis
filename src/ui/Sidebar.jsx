@@ -1,10 +1,13 @@
 import React from "react";
+import { CgClose } from "react-icons/cg";
 import { styled } from "styled-components";
+import BurgerMenu from "./BurgerMenu";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
+
 // import Uploader from "../data/Uploader";
 
-const StyledSidebar = styled.aside`
+const StyledSidebar = styled.aside.attrs({ id: "aside" })`
   background-color: var(--color-grey-0);
   padding: 3.2rem 2.4rem;
   border-right: 1px solid var(--color-grey-100);
@@ -15,14 +18,14 @@ const StyledSidebar = styled.aside`
   gap: 3rem;
 
   @media (max-width: 915px) {
-    background-color: #361111;
+    /* background-color: #361111; */
     position: fixed;
     left: 0;
     top: 0;
     z-index: 99;
-    width: calc(100vw - 4rem);
+    width: 100%; //100vw;
     height: 100vh;
-    transform: translateX(-98%);
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
   }
 
@@ -31,9 +34,15 @@ const StyledSidebar = styled.aside`
   }
 `;
 
+const BurgerMenuPosition = styled.div`
+  position: relative;
+  z-index: 100;
+`;
+
 export default function Sidebar() {
   return (
     <StyledSidebar>
+      <BurgerMenu icon={<CgClose />} />
       <Logo />
       <MainNav />
       {/* <Uploader /> */}

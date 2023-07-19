@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
     Medium (MD): 768px to 991px
     Large (LG): 992px to 1199px
     Extra Large (XL): 1200px and above */
-    
+
 /* @media (max-width: 767px) { // 576px | 915px
     background-color: #ffcccc;
   } */
@@ -147,6 +147,9 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+  @media (max-width: 915px) {
+    padding-top: 62px;
+  }
 }
 
 input,
