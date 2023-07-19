@@ -3,6 +3,21 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
 /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
 
+/* Media query for screens with width less than 768px */
+/* @media (max-width: 767px) { // 576px | 915px
+    background-color: #ffcccc;
+  } */
+
+  /* Media query for screens with width between 768px and 1023px */
+  /* @media (min-width: 768px) and (max-width: 1023px) {
+    background-color: #ccffcc;
+  } */
+
+  /* Media query for screens with width greater than or equal to 1024px */
+  /* @media (min-width: 1024px) {
+    background-color: #ccccff;
+  } */
+
 :root {
  
   &, &.light {
@@ -115,6 +130,7 @@ const GlobalStyles = createGlobalStyle`
 
 html {
   font-size: 62.5%;
+  min-height: 100vh;
 }
 
 body {

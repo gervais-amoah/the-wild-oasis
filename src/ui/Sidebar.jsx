@@ -13,6 +13,22 @@ const StyledSidebar = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+
+  @media (max-width: 915px) {
+    background-color: #361111;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    width: calc(100vw - 4rem);
+    height: 100vh;
+    transform: translateX(-98%);
+    transition: transform 0.3s ease;
+  }
+
+  &.show {
+    transform: translateX(0);
+  }
 `;
 
 export default function Sidebar() {
