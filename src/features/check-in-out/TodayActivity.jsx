@@ -19,6 +19,10 @@ const StyledToday = styled.div`
   grid-column: 1 / span 2;
   padding-top: 2.4rem;
 
+  @media (max-width: 576px) {
+    padding: 2.4rem 2rem;
+  }
+
   @media (max-width: 1323px) {
     flex-basis: 100%;
   }

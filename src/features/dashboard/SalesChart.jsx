@@ -10,6 +10,10 @@ const StyledSalesChart = styled(DashboardBox)`
     stroke: var(--color-grey-300);
   }
 
+  @media (max-width: 576px) {
+    padding: 2.4rem 2rem;
+  }
+
   @media (max-width: 1323px) {
     flex-basis: 100%;
     width: 100%;

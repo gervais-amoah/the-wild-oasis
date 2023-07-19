@@ -147,8 +147,10 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+  
   @media (max-width: 915px) {
     padding-top: 62px;
+    background-color: var(--color-grey-50);
   }
 }
 
