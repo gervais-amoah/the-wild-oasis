@@ -7,10 +7,14 @@ import Input from "../../ui/Input";
 import Textarea from "../../ui/Textarea";
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
+import { useState } from "react";
 
 function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit || {};
   const isEditSession = Boolean(editId);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
@@ -22,6 +26,13 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const { isUpdating, updateCabin } = useUpdateCabin({ closeModal });
 
   const isWorking = isCreating || isUpdating;
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImageFile(file);
+    console.log("previewing...", file);
+    setSelectedImage(URL.createObjectURL(file));
+  };
 
   function isNumeric(value) {
     return !isNaN(parseFloat(value)) && isFinite(value);
@@ -35,7 +46,8 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
         image: typeof data.image == "object" ? data.image[0] : data.image,
       });
     } else {
-      createCabin({ ...data, image: data.image[0] });
+      // createCabin({ ...data, image: data.image[0] });
+      createCabin({ ...data, image: selectedImageFile });
     }
   }
 
@@ -112,10 +124,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow
-        label={"Description for website"}
-        error={errors?.description?.message}
-      >
+      <FormRow label={"Description"} error={errors?.description?.message}>
         <Textarea
           disabled={isWorking}
           type="text"
@@ -129,11 +138,12 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
 
       <FormRow label={"Cabin photo"}>
         <FileInput
+          onChange={handleImageChange}
           id="image"
           accept="image/*"
-          {...register("image", {
-            required: isEditSession ? false : "This field is required",
-          })}
+          // {...register("image", {
+          //   required: isEditSession ? false : "This field is required",
+          // })}
         />
       </FormRow>
 
@@ -150,6 +160,9 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           {isEditSession ? "Edit cabin" : "Create a new cabin"}
         </Button>
       </FormRow>
+
+      {/* image preview */}
+      <div>{selectedImage && <img src={selectedImage} alt="Preview" />}</div>
     </Form>
   );
 }
