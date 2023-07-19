@@ -7,10 +7,20 @@ import Input from "../../ui/Input";
 import Textarea from "../../ui/Textarea";
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
+import { useState } from "react";
+import SpinnerMini from "../../ui/SpinnerMini";
+import ImagePreview from "../../ui/ImagePreview";
+import { useUser } from "../authentication/useUser";
+import { toast } from "react-hot-toast";
 
 function CreateCabinForm({ cabinToEdit, onCloseModal }) {
+  const { isVisitor } = useUser();
+
   const { id: editId, ...editValues } = cabinToEdit || {};
   const isEditSession = Boolean(editId);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageFile, setSelectedImageFile] = useState(editValues?.image);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
@@ -23,19 +33,33 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
 
   const isWorking = isCreating || isUpdating;
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImageFile(file);
+    console.log("previewing...", file);
+    setSelectedImage(URL.createObjectURL(file));
+  };
+
   function isNumeric(value) {
     return !isNaN(parseFloat(value)) && isFinite(value);
   }
 
   function onSubmit(data) {
+    if (isVisitor && isEditSession) {
+      toast.error("Visitors cannot do that action");
+      return;
+    }
+
     if (isEditSession) {
       updateCabin({
         ...data,
         id: editId,
-        image: typeof data.image == "object" ? data.image[0] : data.image,
+        // image: typeof data.image == "object" ? data.image[0] : data.image,
+        image: selectedImageFile,
       });
     } else {
-      createCabin({ ...data, image: data.image[0] });
+      // createCabin({ ...data, image: data.image[0] });
+      createCabin({ ...data, image: selectedImageFile });
     }
   }
 
@@ -112,10 +136,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow
-        label={"Description for website"}
-        error={errors?.description?.message}
-      >
+      <FormRow label={"Description"} error={errors?.description?.message}>
         <Textarea
           disabled={isWorking}
           type="text"
@@ -129,13 +150,42 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
 
       <FormRow label={"Cabin photo"}>
         <FileInput
+          onChange={handleImageChange}
           id="image"
+          required={!isEditSession}
           accept="image/*"
-          {...register("image", {
-            required: isEditSession ? false : "This field is required",
-          })}
+          // {...register("image", {
+          //   required: isEditSession ? false : "This field is required",
+          // })}
         />
       </FormRow>
+
+      {/* image preview */}
+      <ImagePreview
+        selectedImage={selectedImage}
+        cabinToEdit={cabinToEdit}
+        editImage={editValues?.image}
+      />
+      {/* <div
+        style={{
+          overflow: "hidden",
+          height: "200px",
+          position: "relative",
+          width: "62%",
+        }}
+      >
+        {(selectedImage || cabinToEdit) && (
+          <img
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+            src={selectedImage || editValues?.image}
+            alt="Preview"
+          />
+        )}
+      </div> */}
 
       <FormRow>
         <Button
@@ -147,7 +197,13 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Create a new cabin"}
+          {isWorking ? (
+            <SpinnerMini />
+          ) : isEditSession ? (
+            "Edit cabin"
+          ) : (
+            "Create a new cabin"
+          )}
         </Button>
       </FormRow>
     </Form>

@@ -5,15 +5,32 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import { useUpdateUser } from "./useUpdateUser";
+import { useUser } from "./useUser";
+import { toast } from "react-hot-toast";
 
 function UpdatePasswordForm() {
+  const { isVisitor } = useUser();
+
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
 
   const { updateUser, isUpdating } = useUpdateUser();
 
   function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset });
+    if (isVisitor) {
+      toast.error("Visitors cannot do that action");
+      return;
+    }
+
+    updateUser(
+      { password },
+      {
+        onSuccess: reset,
+        onError: (err) => {
+          console.log(err);
+        },
+      }
+    );
   }
 
   return (

@@ -51,6 +51,8 @@ import Menus from "../../ui/Menus";
 import Modal from "../../ui/Modal";
 import Table from "../../ui/Table";
 import { useCreateCabin } from "./useCreateCabin";
+import { useUser } from "../authentication/useUser";
+import { toast } from "react-hot-toast";
 
 export default function CabinRow({ cabin }) {
   const {
@@ -62,6 +64,7 @@ export default function CabinRow({ cabin }) {
     image,
     description,
   } = cabin;
+  const { isVisitor } = useUser();
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const { isCreating, createCabin } = useCreateCabin();
@@ -69,6 +72,10 @@ export default function CabinRow({ cabin }) {
   const isWorking = isCreating || isDeleting;
 
   function duplicateCabin() {
+    if (isVisitor) {
+      toast.error("Visitors cannot do that action");
+      return;
+    }
     const dupCabin = {
       name: `Copy of ${name}`,
       maxCapacity,

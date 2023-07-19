@@ -5,6 +5,7 @@ import FormRowVertical from "../../ui/FormRowVertical";
 import Input from "../../ui/Input";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useLogin } from "./useLogin";
+import { VISITOR, VISITOR_PASS } from "../../../visitor";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,11 @@ function LoginForm() {
     if (!email || !password) return;
 
     login({ email, password });
+  }
+
+  function handleVisitor(evt) {
+    evt.preventDefault();
+    login({ email: VISITOR, password: VISITOR_PASS });
   }
 
   return (
@@ -44,6 +50,14 @@ function LoginForm() {
       <FormRowVertical>
         <Button size="large" disabled={isLogin}>
           {isLogin ? <SpinnerMini /> : "Login"}
+        </Button>
+        <Button
+          size="medium"
+          disabled={isLogin}
+          onClick={handleVisitor}
+          $variation="secondary"
+        >
+          {isLogin ? <SpinnerMini /> : "Login as a visitor"}
         </Button>
       </FormRowVertical>
     </Form>
