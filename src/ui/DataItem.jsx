@@ -5,6 +5,12 @@ const StyledDataItem = styled.div`
   align-items: center;
   gap: 1.6rem;
   padding: 0.8rem 0;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.7rem;
+  }
 `;
 
 const Label = styled.span`

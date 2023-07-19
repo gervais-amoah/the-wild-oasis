@@ -24,8 +24,8 @@ const Form = styled.form`
   margin: 0 auto;
 
   @media (max-width: 767px) {
-    width: calc(100% - 3rem);
-    padding: 2.4rem 2rem;
+    width: calc(100% - 2rem);
+    padding: 2.4rem 1.5rem;
   }
 `;
 

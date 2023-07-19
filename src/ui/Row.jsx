@@ -2,6 +2,9 @@ import { css, styled } from "styled-components";
 
 const Row = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
   ${(props) =>
     props.direction === "horizontal" &&
     css`
@@ -17,7 +20,6 @@ const Row = styled.div`
 
   @media (max-width: 767px) {
     flex-direction: column;
-    gap: 1rem;
     align-items: flex-start;
   }
 `;

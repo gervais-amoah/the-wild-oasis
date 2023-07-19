@@ -7,6 +7,11 @@ const StyledTable = styled.div`
   background-color: var(--color-grey-0);
   border-radius: 7px;
   overflow: hidden;
+
+  @media (max-width: 576px) {
+    overflow-x: auto;
+    width: 100%;
+  }
 `;
 
 const CommonRow = styled.div`
@@ -27,6 +32,10 @@ const StyledHeader = styled(CommonRow)`
   letter-spacing: 0.4px;
   font-weight: 600;
   color: var(--color-grey-600);
+
+  @media (max-width: 576px) {
+    min-width: 650px;
+  }
 `;
 
 const StyledRow = styled(CommonRow)`
@@ -39,6 +48,10 @@ const StyledRow = styled(CommonRow)`
 
 const StyledBody = styled.section`
   margin: 0.4rem 0;
+
+  @media (max-width: 576px) {
+    min-width: 650px;
+  }
 `;
 
 const Footer = styled.footer`

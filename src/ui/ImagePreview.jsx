@@ -6,6 +6,13 @@ const ImagePreviewWrapper = styled.div`
   height: 250px;
   position: relative;
   width: 62%;
+  margin-top: 2rem;
+  border-radius: 0.7rem;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 150px;
+  }
 `;
 
 const ImagePreviewStyle = styled.img`
@@ -16,11 +23,11 @@ const ImagePreviewStyle = styled.img`
 
 function ImagePreview({ selectedImage, cabinToEdit, editImage }) {
   return (
-    <ImagePreviewWrapper>
-      {(selectedImage || cabinToEdit) && (
+    (selectedImage || cabinToEdit) && (
+      <ImagePreviewWrapper>
         <ImagePreviewStyle src={selectedImage || editImage} alt="Preview" />
-      )}
-    </ImagePreviewWrapper>
+      </ImagePreviewWrapper>
+    )
   );
 }
 

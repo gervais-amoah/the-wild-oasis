@@ -16,10 +16,10 @@ const StyledSidebar = styled.aside`
 
   @media (max-width: 915px) {
     background-color: #361111;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    z-index: 999;
+    z-index: 99;
     width: calc(100vw - 4rem);
     height: 100vh;
     transform: translateX(-98%);
