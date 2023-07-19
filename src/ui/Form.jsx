@@ -22,6 +22,7 @@ const Form = styled.form`
   font-size: 1.4rem;
   max-width: calc(100% - 2rem);
   margin: 0 auto;
+  width: 100%;
 
   @media (max-width: 767px) {
     width: calc(100% - 2rem);

@@ -14,12 +14,17 @@ const StyledHeader = styled.header`
   justify-content: flex-end;
 
   @media (max-width: 915px) {
+    padding: 2.4rem 2.5rem;
     position: fixed;
     width: 100vw;
     top: 0;
     left: 0;
     height: 62px;
     z-index: 2;
+  }
+
+  @media (max-width: 576px) {
+    padding: 2.4rem 2rem;
   }
 `;
 
