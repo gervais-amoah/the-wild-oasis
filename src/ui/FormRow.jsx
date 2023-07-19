@@ -9,6 +9,17 @@ const StyledFormRow = styled.div`
 
   padding: 1.2rem 0;
 
+  @media (max-width: 576px) {
+    //
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    & input {
+      width: 100%;
+    }
+  }
+
   &:first-child {
     padding-top: 0;
   }

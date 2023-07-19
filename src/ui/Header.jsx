@@ -12,6 +12,15 @@ const StyledHeader = styled.header`
   gap: 2.4rem;
   align-items: center;
   justify-content: flex-end;
+
+  @media (max-width: 915px) {
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 62px;
+    z-index: 2;
+  }
 `;
 
 export default function Header() {

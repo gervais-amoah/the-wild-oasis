@@ -14,6 +14,12 @@ const StyledModal = styled.div`
   max-height: calc(100vh - 5rem);
   max-width: calc(100% - 4rem);
   overflow: auto;
+
+  @media (max-width: 576px) {
+    max-height: calc(100vh - 3rem);
+    width: calc(100% - 1rem);
+    padding: 2rem 0;
+  }
 `;
 
 const Overlay = styled.div`

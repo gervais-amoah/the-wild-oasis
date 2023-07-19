@@ -86,7 +86,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label={"Maximum capacity"} error={errors?.maxCapacity?.message}>
         <Input
           disabled={isWorking}
@@ -103,7 +102,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label={"Regular price"} error={errors?.regularPrice?.message}>
         <Input
           disabled={isWorking}
@@ -120,7 +118,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label={"Discount"} error={errors?.discount?.message}>
         <Input
           disabled={isWorking}
@@ -135,7 +132,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label={"Description"} error={errors?.description?.message}>
         <Textarea
           disabled={isWorking}
@@ -147,7 +143,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label={"Cabin photo"}>
         <FileInput
           onChange={handleImageChange}
@@ -159,7 +154,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           // })}
         />
       </FormRow>
-
       {/* image preview */}
       <ImagePreview
         selectedImage={selectedImage}
@@ -186,7 +180,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           />
         )}
       </div> */}
-
       <FormRow>
         <Button
           disabled={isWorking}
