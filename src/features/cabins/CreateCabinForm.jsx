@@ -8,6 +8,8 @@ import Textarea from "../../ui/Textarea";
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
 import { useState } from "react";
+import SpinnerMini from "../../ui/SpinnerMini";
+import ImagePreview from "../../ui/ImagePreview";
 
 function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit || {};
@@ -39,7 +41,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   }
 
   function onSubmit(data) {
-    console.log(data);
+    console.log(selectedImageFile);
 
     if (isEditSession) {
       updateCabin({
@@ -143,12 +145,40 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
         <FileInput
           onChange={handleImageChange}
           id="image"
+          required
           accept="image/*"
           // {...register("image", {
           //   required: isEditSession ? false : "This field is required",
           // })}
         />
       </FormRow>
+
+      {/* image preview */}
+      <ImagePreview
+        selectedImage={selectedImage}
+        cabinToEdit={cabinToEdit}
+        editImage={editValues?.image}
+      />
+      {/* <div
+        style={{
+          overflow: "hidden",
+          height: "200px",
+          position: "relative",
+          width: "62%",
+        }}
+      >
+        {(selectedImage || cabinToEdit) && (
+          <img
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+            src={selectedImage || editValues?.image}
+            alt="Preview"
+          />
+        )}
+      </div> */}
 
       <FormRow>
         <Button
@@ -160,16 +190,15 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Create a new cabin"}
+          {isWorking ? (
+            <SpinnerMini />
+          ) : isEditSession ? (
+            "Edit cabin"
+          ) : (
+            "Create a new cabin"
+          )}
         </Button>
       </FormRow>
-
-      {/* image preview */}
-      <div>
-        {(selectedImage || cabinToEdit) && (
-          <img src={selectedImage || editValues?.image} alt="Preview" />
-        )}
-      </div>
     </Form>
   );
 }
