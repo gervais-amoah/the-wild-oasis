@@ -9,6 +9,11 @@ const StyledSalesChart = styled(DashboardBox)`
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
   }
+
+  @media (max-width: 1323px) {
+    flex-basis: 100%;
+    width: 100%;
+  }
 `;
 
 const fakeData = [

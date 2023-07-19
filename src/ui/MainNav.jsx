@@ -55,35 +55,41 @@ const StyledNavLink = styled(NavLink)`
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+function toggleBurgerMenu() {
+  if (document.querySelector("#aside").classList.contains("show")) {
+    document.querySelector("#aside").classList.remove("show");
+  }
+}
+
 export default function MainNav() {
   return (
     <nav>
       <NavList>
-        <li>
+        <li onClick={toggleBurgerMenu}>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
             <span>Home</span>
           </StyledNavLink>
         </li>
-        <li>
+        <li onClick={toggleBurgerMenu}>
           <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
             <span>Bookings</span>
           </StyledNavLink>
         </li>
-        <li>
+        <li onClick={toggleBurgerMenu}>
           <StyledNavLink to="/cabins">
             <HiOutlineHomeModern />
             <span>Cabins</span>
           </StyledNavLink>
         </li>
-        <li>
+        <li onClick={toggleBurgerMenu}>
           <StyledNavLink to="/users">
             <HiOutlineUsers />
             <span>Users</span>
           </StyledNavLink>
         </li>
-        <li>
+        <li onClick={toggleBurgerMenu}>
           <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />
             <span>Settings</span>

@@ -12,6 +12,13 @@ const StyledStat = styled.div`
   grid-template-rows: auto auto;
   column-gap: 1.6rem;
   row-gap: 0.4rem;
+
+  @media (max-width: 1323px) {
+    flex-basis: calc(50% - 1rem);
+  }
+  @media (max-width: 767px) {
+    flex-basis: 100%;
+  }
 `;
 
 const Icon = styled.div`
