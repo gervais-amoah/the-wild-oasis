@@ -14,7 +14,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const isEditSession = Boolean(editId);
 
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedImageFile, setSelectedImageFile] = useState(null);
+  const [selectedImageFile, setSelectedImageFile] = useState(editValues?.image);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
@@ -39,11 +39,14 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   }
 
   function onSubmit(data) {
+    console.log(data);
+
     if (isEditSession) {
       updateCabin({
         ...data,
         id: editId,
-        image: typeof data.image == "object" ? data.image[0] : data.image,
+        // image: typeof data.image == "object" ? data.image[0] : data.image,
+        image: selectedImageFile,
       });
     } else {
       // createCabin({ ...data, image: data.image[0] });
@@ -162,7 +165,11 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
       </FormRow>
 
       {/* image preview */}
-      <div>{selectedImage && <img src={selectedImage} alt="Preview" />}</div>
+      <div>
+        {(selectedImage || cabinToEdit) && (
+          <img src={selectedImage || editValues?.image} alt="Preview" />
+        )}
+      </div>
     </Form>
   );
 }
