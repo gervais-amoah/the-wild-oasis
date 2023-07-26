@@ -6,6 +6,15 @@ import Input from "../../ui/Input";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useLogin } from "./useLogin";
 import { VISITOR, VISITOR_PASS } from "../../../visitor";
+import { styled } from "styled-components";
+
+const VisitorLink = styled.div`
+  color: var(--color-grey-600);
+  text-align: center;
+  margin-top: 2rem;
+  display: inline-block;
+  text-decoration: underline;
+`;
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -51,14 +60,12 @@ function LoginForm() {
         <Button size="large" disabled={isLogin}>
           {isLogin ? <SpinnerMini /> : "Login"}
         </Button>
-        <Button
-          size="medium"
-          disabled={isLogin}
-          onClick={handleVisitor}
-          $variation="secondary"
+        <VisitorLink
+          // disabled={isLogin}
+          onClick={isLogin ? null : handleVisitor}
         >
           {isLogin ? <SpinnerMini /> : "Login as a visitor"}
-        </Button>
+        </VisitorLink>
       </FormRowVertical>
     </Form>
   );

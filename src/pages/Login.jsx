@@ -11,11 +11,21 @@ const LoginLayout = styled.main`
   justify-content: center;
   gap: 3.2rem;
   background-color: var(--color-grey-50);
+  padding: 2rem;
 
   @media (max-width: 767px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  @media (max-width: 576px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 1rem;
   }
 `;
 
