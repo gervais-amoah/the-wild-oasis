@@ -1,6 +1,11 @@
 import { css, styled } from "styled-components";
 
 const Heading = styled.h1`
+  @media (max-width: 767px) {
+    width: calc(100% - 2rem);
+    margin: 0 auto;
+  }
+
   ${(props) =>
     props.as === "h1" &&
     css`
