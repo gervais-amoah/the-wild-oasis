@@ -133,15 +133,17 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
         />
       </FormRow>
       <FormRow label={"Description"} error={errors?.description?.message}>
-        <Textarea
-          disabled={isWorking}
-          type="text"
-          id="description"
-          defaultValue=""
-          {...register("description", {
-            required: "This field is required",
-          })}
-        />
+        <div style={{ display: "block", width: "100%" }}>
+          <Textarea
+            disabled={isWorking}
+            type="text"
+            id="description"
+            defaultValue=""
+            {...register("description", {
+              required: "This field is required",
+            })}
+          />
+        </div>
       </FormRow>
       <FormRow label={"Cabin photo"}>
         <FileInput
