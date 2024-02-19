@@ -11,9 +11,10 @@ import { styled } from "styled-components";
 const VisitorLink = styled.div`
   color: var(--color-grey-600);
   text-align: center;
-  margin-top: 2rem;
   display: inline-block;
+  margin: 2rem auto 0 auto;
   text-decoration: underline;
+  cursor: pointer;
 `;
 
 function LoginForm() {

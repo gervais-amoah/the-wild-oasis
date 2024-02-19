@@ -5,7 +5,7 @@ import BurgerMenu from "./BurgerMenu";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
 
-// import Uploader from "../data/Uploader";
+import Uploader from "../data/Uploader";
 
 const StyledSidebar = styled.aside.attrs({ id: "aside" })`
   background-color: var(--color-grey-0);
