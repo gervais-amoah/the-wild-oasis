@@ -1,21 +1,20 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import BookingDataBox from '../../features/bookings/BookingDataBox';
-
+import { useMoveBack } from '../../hooks/useMoveBack';
 import Button from '../../ui/Button';
 import ButtonGroup from '../../ui/ButtonGroup';
 import ButtonText from '../../ui/ButtonText';
+import Checkbox from '../../ui/Checkbox';
+import Empty from '../../ui/Empty';
 import Heading from '../../ui/Heading';
 import Row from '../../ui/Row';
-
-import { useEffect, useState } from 'react';
-import { useMoveBack } from '../../hooks/useMoveBack';
-import Checkbox from '../../ui/Checkbox';
 import Spinner from '../../ui/Spinner';
-import { formatCurrency } from '../../utils/helpers';
+import { formatCurrency, warnVisitor } from '../../utils/helpers';
+import { useUser } from '../authentication/useUser';
 import { useBooking } from '../bookings/useBooking';
-import { useCheckIn } from './useCheckIn';
 import { useSettings } from '../settings/useSettings';
-import Empty from '../../ui/Empty';
+import { useCheckIn } from './useCheckIn';
 
 const Box = styled.div`
   /* Box */
@@ -33,6 +32,7 @@ function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
   const moveBack = useMoveBack();
+  const { isVisitor } = useUser();
 
   const { isLoading, booking } = useBooking();
 
@@ -60,6 +60,8 @@ function CheckinBooking() {
     (settings?.breakfastPrice || 0) * numGuests * numNights;
 
   function handleCheckin() {
+    if (isVisitor) return warnVisitor();
+
     if (addBreakfast) {
       checkin({
         bookingId,

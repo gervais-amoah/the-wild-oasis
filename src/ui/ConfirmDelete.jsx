@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import Button from "./Button";
-import Heading from "./Heading";
-import { useUser } from "../features/authentication/useUser";
-import { toast } from "react-hot-toast";
+import styled from 'styled-components';
+import { useUser } from '../features/authentication/useUser';
+import { warnVisitor } from '../utils/helpers';
+import Button from './Button';
+import Heading from './Heading';
 
 const StyledConfirmDelete = styled.div`
   width: 40rem;
@@ -31,10 +31,7 @@ function ConfirmDelete({ resourceName, onConfirm, onCloseModal, disabled }) {
   const { isVisitor } = useUser();
 
   function handleConfirm() {
-    if (isVisitor) {
-      toast.error("Visitors cannot do that action");
-      return;
-    }
+    if (isVisitor) return warnVisitor();
     onConfirm();
   }
 

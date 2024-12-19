@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
-import Button from "../../ui/Button";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-import SpinnerMini from "../../ui/SpinnerMini";
-import { useSignup } from "./useSignup";
-import { useUser } from "./useUser";
-import { toast } from "react-hot-toast";
+import { useForm } from 'react-hook-form';
+import Button from '../../ui/Button';
+import Form from '../../ui/Form';
+import FormRow from '../../ui/FormRow';
+import Input from '../../ui/Input';
+import SpinnerMini from '../../ui/SpinnerMini';
+import { warnVisitor } from '../../utils/helpers';
+import { useSignup } from './useSignup';
+import { useUser } from './useUser';
 
 // Email regex: /\S+@\S+\.\S+/
 
@@ -19,7 +19,7 @@ function SignupForm() {
 
   function onSubmit({ fullName, email, password }) {
     if (isVisitor) {
-      toast.error("Visitors cannot do that action");
+      warnVisitor();
     } else {
       signup({ fullName, email, password }, { onSettled: reset });
     }
@@ -32,8 +32,8 @@ function SignupForm() {
           type="text"
           id="fullName"
           disabled={isLoading}
-          {...register("fullName", {
-            required: "This field is required",
+          {...register('fullName', {
+            required: 'This field is required',
           })}
         />
       </FormRow>
@@ -43,11 +43,11 @@ function SignupForm() {
           type="email"
           id="email"
           disabled={isLoading}
-          {...register("email", {
-            required: "This field is required",
+          {...register('email', {
+            required: 'This field is required',
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "Please provide a valid email",
+              message: 'Please provide a valid email',
             },
           })}
         />
@@ -61,11 +61,11 @@ function SignupForm() {
           type="password"
           id="password"
           disabled={isLoading}
-          {...register("password", {
-            required: "This field is required",
+          {...register('password', {
+            required: 'This field is required',
             minLength: {
               value: 8,
-              message: "The password needs to be at least 8 characteres",
+              message: 'The password needs to be at least 8 characteres',
             },
           })}
         />
@@ -76,10 +76,10 @@ function SignupForm() {
           type="password"
           id="passwordConfirm"
           disabled={isLoading}
-          {...register("passwordConfirm", {
-            required: "This field is required",
+          {...register('passwordConfirm', {
+            required: 'This field is required',
             validate: (value) =>
-              value === getValues().password || "Passwords need to match",
+              value === getValues().password || 'Passwords need to match',
           })}
         />
       </FormRow>
@@ -95,7 +95,7 @@ function SignupForm() {
           Cancel
         </Button>
         <Button disabled={isLoading}>
-          {isLoading ? <SpinnerMini /> : "Create new user"}
+          {isLoading ? <SpinnerMini /> : 'Create new user'}
         </Button>
       </FormRow>
     </Form>

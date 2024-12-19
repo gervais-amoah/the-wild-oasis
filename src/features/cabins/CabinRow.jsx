@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import React from 'react';
+import { HiPencil, HiTrash } from 'react-icons/hi';
+import { HiSquare2Stack } from 'react-icons/hi2';
+import styled from 'styled-components';
+import ConfirmDelete from '../../ui/ConfirmDelete';
+import Menus from '../../ui/Menus';
+import Modal from '../../ui/Modal';
+import Table from '../../ui/Table';
+import { formatCurrency, warnVisitor } from '../../utils/helpers';
+import { useUser } from '../authentication/useUser';
+import CreateCabinForm from './CreateCabinForm';
+import { useCreateCabin } from './useCreateCabin';
+import { useDeleteCabin } from './useDeleteCabin';
 
 // const TableRow = styled.div`
 //   display: grid;
@@ -25,34 +37,19 @@ const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
-  font-family: "Sono";
+  font-family: 'Sono';
 `;
 
 const Price = styled.div`
-  font-family: "Sono";
+  font-family: 'Sono';
   font-weight: 600;
 `;
 
 const Discount = styled.div`
-  font-family: "Sono";
+  font-family: 'Sono';
   font-weight: 500;
   color: var(--color-green-700);
 `;
-
-import React from "react";
-import { formatCurrency } from "../../utils/helpers";
-import CreateCabinForm from "./CreateCabinForm";
-import { useDeleteCabin } from "./useDeleteCabin";
-
-import { HiPencil, HiTrash } from "react-icons/hi";
-import { HiSquare2Stack } from "react-icons/hi2";
-import ConfirmDelete from "../../ui/ConfirmDelete";
-import Menus from "../../ui/Menus";
-import Modal from "../../ui/Modal";
-import Table from "../../ui/Table";
-import { useCreateCabin } from "./useCreateCabin";
-import { useUser } from "../authentication/useUser";
-import { toast } from "react-hot-toast";
 
 export default function CabinRow({ cabin }) {
   const {
@@ -72,10 +69,7 @@ export default function CabinRow({ cabin }) {
   const isWorking = isCreating || isDeleting;
 
   function duplicateCabin() {
-    if (isVisitor) {
-      toast.error("Visitors cannot do that action");
-      return;
-    }
+    if (isVisitor) return warnVisitor();
     const dupCabin = {
       name: `Copy of ${name}`,
       maxCapacity,

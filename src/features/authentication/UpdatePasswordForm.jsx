@@ -1,12 +1,11 @@
-import { useForm } from "react-hook-form";
-import Button from "../../ui/Button";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-
-import { useUpdateUser } from "./useUpdateUser";
-import { useUser } from "./useUser";
-import { toast } from "react-hot-toast";
+import { useForm } from 'react-hook-form';
+import Button from '../../ui/Button';
+import Form from '../../ui/Form';
+import FormRow from '../../ui/FormRow';
+import Input from '../../ui/Input';
+import { warnVisitor } from '../../utils/helpers';
+import { useUpdateUser } from './useUpdateUser';
+import { useUser } from './useUser';
 
 function UpdatePasswordForm() {
   const { isVisitor } = useUser();
@@ -17,10 +16,7 @@ function UpdatePasswordForm() {
   const { updateUser, isUpdating } = useUpdateUser();
 
   function onSubmit({ password }) {
-    if (isVisitor) {
-      toast.error("Visitors cannot do that action");
-      return;
-    }
+    if (isVisitor) return warnVisitor();
 
     updateUser(
       { password },
@@ -44,11 +40,11 @@ function UpdatePasswordForm() {
           id="password"
           autoComplete="current-password"
           disabled={isUpdating}
-          {...register("password", {
-            required: "This field is required",
+          {...register('password', {
+            required: 'This field is required',
             minLength: {
               value: 8,
-              message: "Password needs a minimum of 8 characters",
+              message: 'Password needs a minimum of 8 characters',
             },
           })}
         />
@@ -63,10 +59,10 @@ function UpdatePasswordForm() {
           autoComplete="new-password"
           id="passwordConfirm"
           disabled={isUpdating}
-          {...register("passwordConfirm", {
-            required: "This field is required",
+          {...register('passwordConfirm', {
+            required: 'This field is required',
             validate: (value) =>
-              getValues().password === value || "Passwords need to match",
+              getValues().password === value || 'Passwords need to match',
           })}
         />
       </FormRow>

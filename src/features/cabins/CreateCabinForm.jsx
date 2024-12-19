@@ -1,17 +1,17 @@
-import { useForm } from "react-hook-form";
-import Button from "../../ui/Button";
-import FileInput from "../../ui/FileInput";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-import Textarea from "../../ui/Textarea";
-import { useCreateCabin } from "./useCreateCabin";
-import { useUpdateCabin } from "./useUpdateCabin";
-import { useState } from "react";
-import SpinnerMini from "../../ui/SpinnerMini";
-import ImagePreview from "../../ui/ImagePreview";
-import { useUser } from "../authentication/useUser";
-import { toast } from "react-hot-toast";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Button from '../../ui/Button';
+import FileInput from '../../ui/FileInput';
+import Form from '../../ui/Form';
+import FormRow from '../../ui/FormRow';
+import ImagePreview from '../../ui/ImagePreview';
+import Input from '../../ui/Input';
+import SpinnerMini from '../../ui/SpinnerMini';
+import Textarea from '../../ui/Textarea';
+import { warnVisitor } from '../../utils/helpers';
+import { useUser } from '../authentication/useUser';
+import { useCreateCabin } from './useCreateCabin';
+import { useUpdateCabin } from './useUpdateCabin';
 
 function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const { isVisitor } = useUser();
@@ -36,7 +36,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImageFile(file);
-    console.log("previewing...", file);
+    console.log('previewing...', file);
     setSelectedImage(URL.createObjectURL(file));
   };
 
@@ -45,10 +45,7 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   }
 
   function onSubmit(data) {
-    if (isVisitor && isEditSession) {
-      toast.error("Visitors cannot do that action");
-      return;
-    }
+    if (isVisitor && isEditSession) return warnVisitor();
 
     if (isEditSession) {
       updateCabin({
@@ -74,78 +71,78 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
-      type={onCloseModal && "modal"}
+      type={onCloseModal && 'modal'}
     >
-      <FormRow label={"Cabin name"} error={errors?.name?.message}>
+      <FormRow label={'Cabin name'} error={errors?.name?.message}>
         <Input
           disabled={isWorking}
           type="text"
           id="name"
-          {...register("name", {
-            required: "This field is required",
+          {...register('name', {
+            required: 'This field is required',
           })}
         />
       </FormRow>
-      <FormRow label={"Maximum capacity"} error={errors?.maxCapacity?.message}>
+      <FormRow label={'Maximum capacity'} error={errors?.maxCapacity?.message}>
         <Input
           disabled={isWorking}
           type="text"
           id="maxCapacity"
-          {...register("maxCapacity", {
-            required: "This field is required",
+          {...register('maxCapacity', {
+            required: 'This field is required',
             validate: (value) =>
-              isNumeric(value) || "Please provide a valid number",
+              isNumeric(value) || 'Please provide a valid number',
             min: {
               value: 1,
-              message: "Capacity should be at least one",
+              message: 'Capacity should be at least one',
             },
           })}
         />
       </FormRow>
-      <FormRow label={"Regular price"} error={errors?.regularPrice?.message}>
+      <FormRow label={'Regular price'} error={errors?.regularPrice?.message}>
         <Input
           disabled={isWorking}
           type="text"
           id="regularPrice"
-          {...register("regularPrice", {
-            required: "This field is required",
+          {...register('regularPrice', {
+            required: 'This field is required',
             validate: (value) =>
-              isNumeric(value) || "Please provide a valid number",
+              isNumeric(value) || 'Please provide a valid number',
             min: {
               value: 10,
-              message: "Price should be at least 10",
+              message: 'Price should be at least 10',
             },
           })}
         />
       </FormRow>
-      <FormRow label={"Discount"} error={errors?.discount?.message}>
+      <FormRow label={'Discount'} error={errors?.discount?.message}>
         <Input
           disabled={isWorking}
           type="text"
           id="discount"
           defaultValue={0}
-          {...register("discount", {
-            required: "This field is required",
+          {...register('discount', {
+            required: 'This field is required',
             validate: (value) =>
               +getValues().regularPrice >= +value ||
-              "Discount should be less than the regular price",
+              'Discount should be less than the regular price',
           })}
         />
       </FormRow>
-      <FormRow label={"Description"} error={errors?.description?.message}>
-        <div style={{ display: "block", width: "100%" }}>
+      <FormRow label={'Description'} error={errors?.description?.message}>
+        <div style={{ display: 'block', width: '100%' }}>
           <Textarea
             disabled={isWorking}
             type="text"
             id="description"
             defaultValue=""
-            {...register("description", {
-              required: "This field is required",
+            {...register('description', {
+              required: 'This field is required',
             })}
           />
         </div>
       </FormRow>
-      <FormRow label={"Cabin photo"}>
+      <FormRow label={'Cabin photo'}>
         <FileInput
           onChange={handleImageChange}
           id="image"
@@ -195,9 +192,9 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
           {isWorking ? (
             <SpinnerMini />
           ) : isEditSession ? (
-            "Edit cabin"
+            'Edit cabin'
           ) : (
-            "Create a new cabin"
+            'Create a new cabin'
           )}
         </Button>
       </FormRow>
