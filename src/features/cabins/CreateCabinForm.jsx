@@ -8,7 +8,7 @@ import ImagePreview from '../../ui/ImagePreview';
 import Input from '../../ui/Input';
 import SpinnerMini from '../../ui/SpinnerMini';
 import Textarea from '../../ui/Textarea';
-import { warnVisitor } from '../../utils/helpers';
+import { errorToast, warnVisitor } from '../../utils/helpers';
 import { useUser } from '../authentication/useUser';
 import { useCreateCabin } from './useCreateCabin';
 import { useUpdateCabin } from './useUpdateCabin';
@@ -36,7 +36,6 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImageFile(file);
-    console.log('previewing...', file);
     setSelectedImage(URL.createObjectURL(file));
   };
 
@@ -47,16 +46,21 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   function onSubmit(data) {
     if (isVisitor && isEditSession) return warnVisitor();
 
-    if (isEditSession) {
-      updateCabin({
-        ...data,
-        id: editId,
-        // image: typeof data.image == "object" ? data.image[0] : data.image,
-        image: selectedImageFile,
-      });
-    } else {
-      // createCabin({ ...data, image: data.image[0] });
-      createCabin({ ...data, image: selectedImageFile });
+    try {
+      if (isEditSession) {
+        updateCabin({
+          ...data,
+          id: editId,
+          // image: typeof data.image == "object" ? data.image[0] : data.image,
+          image: selectedImageFile,
+        });
+      } else {
+        // createCabin({ ...data, image: data.image[0] });
+        createCabin({ ...data, image: selectedImageFile });
+      }
+    } catch (error) {
+      console.error(error);
+      errorToast('Something went wrong');
     }
   }
 

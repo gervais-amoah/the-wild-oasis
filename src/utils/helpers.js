@@ -35,3 +35,7 @@ export const warnVisitor = () => {
     icon: '⚠️',
   });
 };
+
+export const errorToast = (message) => {
+  toast.error(message);
+};

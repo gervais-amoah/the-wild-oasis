@@ -1,13 +1,20 @@
-import React from "react";
-import { CgClose } from "react-icons/cg";
-import { styled } from "styled-components";
-import BurgerMenu from "./BurgerMenu";
-import Logo from "./Logo";
-import MainNav from "./MainNav";
+import React from 'react';
+import { CgClose } from 'react-icons/cg';
+import { styled } from 'styled-components';
+import BurgerMenu from './BurgerMenu';
+import Logo from './Logo';
+import MainNav from './MainNav';
+// import { PAGE_SIZE } from "../../utils/constants";
+import { DEV_MODE } from '../utils/constants';
 
-// import Uploader from "../data/Uploader";
+import Uploader from '../data/Uploader';
+const isDev = import.meta.env.MODE === DEV_MODE;
 
-const StyledSidebar = styled.aside.attrs({ id: "aside" })`
+/*
+tyrion@email.com - Tyrion@Zertyui
+*/
+
+const StyledSidebar = styled.aside.attrs({ id: 'aside' })`
   background-color: var(--color-grey-0);
   padding: 3.2rem 2.4rem;
   border-right: 1px solid var(--color-grey-100);
@@ -45,7 +52,7 @@ export default function Sidebar() {
       <BurgerMenu icon={<CgClose />} />
       <Logo />
       <MainNav />
-      {/* <Uploader /> */}
+      {isDev ? <Uploader /> : null}
     </StyledSidebar>
   );
 }
