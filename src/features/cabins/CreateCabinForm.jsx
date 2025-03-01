@@ -79,6 +79,8 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
     >
       <FormRow label={'Cabin name'} error={errors?.name?.message}>
         <Input
+          autoFocus
+          placeholder="Lazy Moose"
           disabled={isWorking}
           type="text"
           id="name"
@@ -89,8 +91,9 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
       </FormRow>
       <FormRow label={'Maximum capacity'} error={errors?.maxCapacity?.message}>
         <Input
+          placeholder="1"
           disabled={isWorking}
-          type="text"
+          type="number"
           id="maxCapacity"
           {...register('maxCapacity', {
             required: 'This field is required',
@@ -105,8 +108,9 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
       </FormRow>
       <FormRow label={'Regular price'} error={errors?.regularPrice?.message}>
         <Input
+          placeholder="10"
           disabled={isWorking}
-          type="text"
+          type="number"
           id="regularPrice"
           {...register('regularPrice', {
             required: 'This field is required',
@@ -121,8 +125,9 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
       </FormRow>
       <FormRow label={'Discount'} error={errors?.discount?.message}>
         <Input
+          placeholder="0"
           disabled={isWorking}
-          type="text"
+          type="number"
           id="discount"
           defaultValue={0}
           {...register('discount', {
@@ -130,6 +135,10 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }) {
             validate: (value) =>
               +getValues().regularPrice >= +value ||
               'Discount should be less than the regular price',
+            min: {
+              value: 1,
+              message: 'Discount should be at least 1',
+            },
           })}
         />
       </FormRow>
